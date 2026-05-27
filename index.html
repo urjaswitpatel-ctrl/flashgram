@@ -1,301 +1,370 @@
-<!-- ================= NEW AGE SOCIAL POST DESIGN ================= -->
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="neo-post-box">
+<head>
 
-<!-- TOP USER -->
+<meta charset="UTF-8">
 
-<div class="neo-top">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<div class="neo-profile-ring">
-
-<div class="neo-avatar">
-U
-</div>
-
-</div>
-
-<div>
-
-<div class="neo-name">
-Your Space
-</div>
-
-<div class="neo-status">
-online now
-</div>
-
-</div>
-
-</div>
-
-<!-- PREVIEW -->
-
-<div
-class="neo-preview hidden"
-id="previewContainer">
-
-<img
-id="previewImage"
-class="neo-media hidden"
->
-
-<video
-id="previewVideo"
-class="neo-media hidden"
-controls>
-</video>
-
-<!-- GLASS OVERLAY -->
-
-<div class="neo-glass">
-
-<input
-type="text"
-id="overlayText"
-placeholder="Type aesthetic text..."
-oninput="updateOverlayText()"
->
-
-<div
-class="neo-live-text"
-id="liveOverlayText">
-</div>
-
-</div>
-
-</div>
-
-<!-- TOOLBAR -->
-
-<div class="neo-toolbar">
-
-<!-- PLUS -->
-
-<label class="neo-plus">
-
-<input
-type="file"
-id="file"
-hidden
-accept="image/*,video/*"
-onchange="previewMedia(event)"
->
-
-+
-
-</label>
-
-<!-- SONG -->
-
-<div class="neo-music">
-
-🎵
-
-<input
-type="text"
-id="songName"
-placeholder="Add vibe soundtrack"
->
-
-</div>
-
-</div>
-
-<!-- CAPTION -->
-
-<textarea
-id="caption"
-class="neo-caption"
-placeholder="Share your vibe...">
-</textarea>
-
-<!-- BUTTON -->
-
-<button
-class="neo-share"
-onclick="uploadPost()">
-
-Share Memory ✨
-
-</button>
-
-<p id="uploadMsg"></p>
-
-</div>
+<title>FutureGram</title>
 
 <style>
 
-/* ================= BODY FEEL ================= */
+/* ================= GLOBAL ================= */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:
+Inter,
+Arial,
+sans-serif;
+}
 
 body{
 
 background:
-radial-gradient(circle at top left,
-#1e1b4b,
-#020617 60%);
+linear-gradient(
+135deg,
+#020617,
+#0f172a,
+#111827
+);
+
+color:white;
+
+overflow-x:hidden;
+
+min-height:100vh;
 
 }
 
-/* ================= MAIN CARD ================= */
+/* ================= HEADER ================= */
 
-.neo-post-box{
+header{
 
-max-width:550px;
+position:sticky;
+
+top:0;
+
+z-index:100;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:18px 25px;
+
+backdrop-filter:blur(25px);
+
+background:
+rgba(15,23,42,0.6);
+
+border-bottom:
+1px solid rgba(255,255,255,0.08);
+
+}
+
+.logo{
+
+font-size:28px;
+
+font-weight:900;
+
+background:
+linear-gradient(
+45deg,
+#ff0080,
+#7c3aed,
+#00d4ff
+);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+}
+
+.logout{
+
+padding:10px 18px;
+
+border:none;
+
+border-radius:18px;
+
+background:
+rgba(255,255,255,0.08);
+
+color:white;
+
+cursor:pointer;
+
+backdrop-filter:blur(10px);
+
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+
+max-width:650px;
 
 margin:auto;
 
 padding:20px;
 
+}
+
+/* ================= AUTH ================= */
+
+.auth-card{
+
+padding:30px;
+
 border-radius:30px;
 
-background:rgba(255,255,255,0.05);
+background:
+rgba(255,255,255,0.05);
 
-backdrop-filter:blur(25px);
+backdrop-filter:blur(20px);
 
-border:1px solid rgba(255,255,255,0.08);
+border:
+1px solid rgba(255,255,255,0.08);
 
 box-shadow:
-0 10px 40px rgba(0,0,0,0.5);
+0 15px 40px rgba(0,0,0,0.4);
 
-animation:floatIn 0.6s ease;
-
-overflow:hidden;
-
-position:relative;
+animation:fadeIn 0.5s ease;
 
 }
 
-/* ================= GLOW ================= */
+.auth-card h2{
 
-.neo-post-box::before{
+margin-bottom:20px;
 
-content:"";
-
-position:absolute;
-
-width:250px;
-
-height:250px;
-
-background:#ff00aa;
-
-filter:blur(120px);
-
-opacity:0.2;
-
-top:-100px;
-
-right:-100px;
-
-border-radius:50%;
+font-size:30px;
 
 }
 
-/* ================= TOP ================= */
+.auth-card input{
 
-.neo-top{
+width:100%;
 
-display:flex;
+padding:15px;
 
-align-items:center;
+margin-bottom:15px;
 
-gap:15px;
+border:none;
 
-margin-bottom:18px;
+border-radius:18px;
 
-position:relative;
+background:
+rgba(255,255,255,0.06);
 
-z-index:2;
+color:white;
+
+font-size:15px;
+
+outline:none;
 
 }
 
-/* ================= PROFILE ================= */
+.auth-card button{
 
-.neo-profile-ring{
+width:100%;
 
-padding:3px;
+padding:15px;
 
-border-radius:50%;
+margin-top:10px;
+
+border:none;
+
+border-radius:18px;
+
+font-size:16px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+color:white;
 
 background:
 linear-gradient(
 45deg,
-#ff00aa,
+#ff0080,
 #7c3aed,
-#00e5ff
+#00d4ff
 );
+
+background-size:300% 300%;
+
+animation:gradientMove 6s ease infinite;
 
 }
 
-.neo-avatar{
+/* ================= FLOAT BUTTON ================= */
 
-width:55px;
+.floating-btn{
 
-height:55px;
+position:fixed;
 
-border-radius:50%;
+bottom:25px;
 
-background:#0f172a;
+right:25px;
 
-display:flex;
+width:75px;
 
-align-items:center;
+height:75px;
 
-justify-content:center;
+border:none;
 
-font-size:22px;
+border-radius:28px;
+
+font-size:42px;
 
 font-weight:bold;
 
+cursor:pointer;
+
+z-index:1000;
+
+color:white;
+
+background:
+linear-gradient(
+45deg,
+#ff0080,
+#7c3aed,
+#00d4ff
+);
+
+background-size:300% 300%;
+
+animation:
+gradientMove 6s ease infinite,
+floatBtn 3s ease infinite;
+
+box-shadow:
+0 15px 40px rgba(124,58,237,0.5);
+
 }
 
-.neo-name{
+/* ================= MODAL ================= */
 
-font-size:17px;
+.modal{
 
-font-weight:700;
+position:fixed;
+
+inset:0;
+
+background:
+rgba(0,0,0,0.6);
+
+backdrop-filter:blur(10px);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+z-index:2000;
 
 }
 
-.neo-status{
+.modal-box{
 
-font-size:12px;
+width:100%;
 
-color:#00ff99;
+max-width:550px;
+
+max-height:90vh;
+
+overflow-y:auto;
+
+padding:25px;
+
+border-radius:35px;
+
+background:
+rgba(15,23,42,0.85);
+
+backdrop-filter:blur(25px);
+
+border:
+1px solid rgba(255,255,255,0.08);
+
+animation:scaleIn 0.4s ease;
+
+}
+
+/* ================= MODAL TOP ================= */
+
+.modal-top{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:20px;
+
+}
+
+.close-btn{
+
+background:none;
+
+border:none;
+
+color:white;
+
+font-size:24px;
+
+cursor:pointer;
 
 }
 
 /* ================= PREVIEW ================= */
 
-.neo-preview{
+.preview{
 
 position:relative;
 
 overflow:hidden;
 
-border-radius:24px;
+border-radius:25px;
 
 margin-bottom:18px;
 
-animation:zoomIn 0.4s ease;
-
 }
 
-.neo-media{
+.preview img,
+.preview video{
 
 width:100%;
 
-max-height:600px;
+max-height:500px;
 
 object-fit:cover;
 
 display:block;
 
+border-radius:25px;
+
 }
 
-/* ================= GLASS ================= */
-
-.neo-glass{
+.overlay-text{
 
 position:absolute;
 
@@ -303,173 +372,83 @@ bottom:20px;
 
 left:20px;
 
-right:20px;
+font-size:34px;
 
-padding:16px;
-
-border-radius:20px;
-
-background:rgba(255,255,255,0.08);
-
-backdrop-filter:blur(15px);
-
-border:1px solid rgba(255,255,255,0.1);
-
-}
-
-.neo-glass input{
-
-width:100%;
-
-padding:12px;
-
-border:none;
-
-border-radius:14px;
-
-background:rgba(0,0,0,0.3);
+font-weight:900;
 
 color:white;
 
-font-size:15px;
+text-shadow:0 0 20px black;
 
-outline:none;
-
-}
-
-/* ================= LIVE TEXT ================= */
-
-.neo-live-text{
-
-margin-top:12px;
-
-font-size:34px;
-
-font-weight:800;
-
-line-height:1.1;
-
-background:
-linear-gradient(
-45deg,
-#fff,
-#ff00aa,
-#00e5ff
-);
-
--webkit-background-clip:text;
-
--webkit-text-fill-color:transparent;
-
-text-shadow:0 0 25px rgba(255,255,255,0.2);
+max-width:80%;
 
 word-break:break-word;
 
 }
 
-/* ================= TOOLBAR ================= */
+/* ================= TOOLS ================= */
 
-.neo-toolbar{
+.tool-row{
 
 display:flex;
 
-align-items:center;
+gap:12px;
 
-gap:15px;
-
-margin-bottom:18px;
+margin-bottom:15px;
 
 }
 
-/* ================= PLUS ================= */
-
-.neo-plus{
+.plus-upload{
 
 width:65px;
 
 height:65px;
 
-border-radius:24px;
+border-radius:22px;
 
 display:flex;
 
-justify-content:center;
-
 align-items:center;
 
-font-size:40px;
+justify-content:center;
 
-font-weight:bold;
+font-size:30px;
 
 cursor:pointer;
 
 background:
 linear-gradient(
-135deg,
-#ff00aa,
+45deg,
+#ff0080,
 #7c3aed
 );
 
-transition:0.4s;
-
-box-shadow:
-0 10px 25px rgba(124,58,237,0.5);
+flex-shrink:0;
 
 }
 
-.neo-plus:hover{
-
-transform:
-rotate(180deg)
-scale(1.1);
-
-}
-
-/* ================= MUSIC ================= */
-
-.neo-music{
-
-flex:1;
-
-display:flex;
-
-align-items:center;
-
-gap:10px;
-
-padding:0 15px;
-
-height:65px;
-
-border-radius:20px;
-
-background:rgba(255,255,255,0.05);
-
-border:1px solid rgba(255,255,255,0.08);
-
-backdrop-filter:blur(10px);
-
-}
-
-.neo-music input{
-
-background:none;
-
-border:none;
-
-outline:none;
-
-color:white;
+.modern-input{
 
 width:100%;
 
-font-size:15px;
+padding:15px;
+
+border:none;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,0.06);
+
+color:white;
+
+outline:none;
 
 }
 
 /* ================= CAPTION ================= */
 
-.neo-caption{
+.caption{
 
 width:100%;
 
@@ -477,29 +456,26 @@ min-height:120px;
 
 padding:18px;
 
-border-radius:22px;
+border:none;
 
-background:rgba(255,255,255,0.05);
+border-radius:24px;
 
-border:1px solid rgba(255,255,255,0.08);
+background:
+rgba(255,255,255,0.06);
 
 color:white;
 
-font-size:15px;
+outline:none;
 
 resize:none;
 
-outline:none;
-
 margin-bottom:18px;
-
-backdrop-filter:blur(10px);
 
 }
 
-/* ================= BUTTON ================= */
+/* ================= SHARE ================= */
 
-.neo-share{
+.share-btn{
 
 width:100%;
 
@@ -511,38 +487,139 @@ border-radius:22px;
 
 font-size:17px;
 
-font-weight:700;
+font-weight:bold;
 
 cursor:pointer;
+
+color:white;
 
 background:
 linear-gradient(
 45deg,
-#ff00aa,
+#ff0080,
 #7c3aed,
-#00e5ff
+#00d4ff
 );
 
 background-size:300% 300%;
 
 animation:gradientMove 6s ease infinite;
 
+}
+
+/* ================= POSTS ================= */
+
+.post{
+
+padding:15px;
+
+border-radius:28px;
+
+margin-bottom:25px;
+
+background:
+rgba(255,255,255,0.05);
+
+backdrop-filter:blur(20px);
+
+border:
+1px solid rgba(255,255,255,0.08);
+
+overflow:hidden;
+
+animation:fadeIn 0.4s ease;
+
+}
+
+.post-top{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:12px;
+
+}
+
+.song-tag{
+
+padding:6px 12px;
+
+border-radius:999px;
+
+font-size:13px;
+
+background:
+rgba(255,255,255,0.08);
+
+}
+
+.feed-media{
+
+width:100%;
+
+max-height:600px;
+
+object-fit:cover;
+
+border-radius:24px;
+
+}
+
+.media-wrap{
+
+position:relative;
+
+}
+
+.feed-text{
+
+position:absolute;
+
+bottom:20px;
+
+left:20px;
+
+font-size:34px;
+
+font-weight:900;
+
+text-shadow:0 0 20px black;
+
+}
+
+.feed-caption{
+
+margin-top:14px;
+
+line-height:1.5;
+
+}
+
+.like-btn{
+
+margin-top:15px;
+
+padding:12px;
+
+width:100%;
+
+border:none;
+
+border-radius:18px;
+
+cursor:pointer;
+
 color:white;
 
-transition:0.4s;
-
-box-shadow:
-0 15px 35px rgba(124,58,237,0.4);
+background:
+rgba(255,255,255,0.08);
 
 }
 
-.neo-share:hover{
-
-transform:translateY(-3px);
-
-}
-
-/* ================= ANIMATIONS ================= */
+/* ================= ANIMATION ================= */
 
 @keyframes gradientMove{
 
@@ -560,25 +637,37 @@ background-position:0% 50%;
 
 }
 
-@keyframes floatIn{
+@keyframes floatBtn{
+
+0%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-8px);
+}
+
+100%{
+transform:translateY(0);
+}
+
+}
+
+@keyframes fadeIn{
 
 from{
 opacity:0;
-transform:
-translateY(40px)
-scale(0.95);
+transform:translateY(20px);
 }
 
 to{
 opacity:1;
-transform:
-translateY(0)
-scale(1);
+transform:translateY(0);
 }
 
 }
 
-@keyframes zoomIn{
+@keyframes scaleIn{
 
 from{
 opacity:0;
@@ -598,7 +687,341 @@ display:none;
 
 </style>
 
-<script>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+FutureGram
+</div>
+
+<button
+class="logout hidden"
+id="logoutBtn"
+onclick="logout()">
+
+Logout
+
+</button>
+
+</header>
+
+<div class="container">
+
+<!-- AUTH -->
+
+<div class="auth-card"
+id="authBox">
+
+<h2>Welcome Back ✨</h2>
+
+<input
+type="email"
+id="email"
+placeholder="Email">
+
+<input
+type="password"
+id="password"
+placeholder="Password">
+
+<button onclick="signup()">
+Signup
+</button>
+
+<button onclick="login()">
+Login
+</button>
+
+<button onclick="googleLogin()">
+Google Login
+</button>
+
+<p id="authMsg"></p>
+
+</div>
+
+<!-- APP -->
+
+<div id="app"
+class="hidden">
+
+<div id="posts"></div>
+
+</div>
+
+</div>
+
+<!-- FLOAT -->
+
+<button
+class="floating-btn hidden"
+id="floatingBtn"
+onclick="openModal()">
+
++
+
+</button>
+
+<!-- MODAL -->
+
+<div
+class="modal hidden"
+id="modal">
+
+<div class="modal-box">
+
+<div class="modal-top">
+
+<h2>Create Memory</h2>
+
+<button
+class="close-btn"
+onclick="closeModal()">
+
+✕
+
+</button>
+
+</div>
+
+<!-- PREVIEW -->
+
+<div
+class="preview hidden"
+id="previewContainer">
+
+<img
+id="previewImage"
+class="hidden">
+
+<video
+id="previewVideo"
+class="hidden"
+controls>
+</video>
+
+<div
+class="overlay-text"
+id="liveOverlayText">
+</div>
+
+</div>
+
+<!-- TOOLS -->
+
+<div class="tool-row">
+
+<label class="plus-upload">
+
+<input
+type="file"
+id="file"
+hidden
+accept="image/*,video/*"
+onchange="previewMedia(event)">
+
+📸
+
+</label>
+
+<input
+type="text"
+id="songName"
+class="modern-input"
+placeholder="🎵 Add soundtrack">
+
+</div>
+
+<input
+type="text"
+id="overlayText"
+class="modern-input"
+placeholder="✨ Add text"
+oninput="updateOverlayText()">
+
+<textarea
+id="caption"
+class="caption"
+placeholder="What's happening?">
+</textarea>
+
+<button
+class="share-btn"
+onclick="uploadPost()">
+
+Share Post 🚀
+
+</button>
+
+<p id="uploadMsg"></p>
+
+</div>
+
+</div>
+
+<div id="posts"></div>
+
+<script type="module">
+
+// ================= IMPORTS =================
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+GoogleAuthProvider,
+signInWithPopup,
+onAuthStateChanged,
+signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+query,
+orderBy,
+onSnapshot,
+serverTimestamp,
+doc,
+updateDoc,
+increment
+}
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ================= CONFIG =================
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyDxyRpIkd1F8XLmfQ7tKwZMZdh1cHHmZYc",
+
+authDomain: "flashgram-c87f7.firebaseapp.com",
+
+projectId: "flashgram-c87f7",
+
+storageBucket: "flashgram-c87f7.appspot.com",
+
+messagingSenderId: "950828844867",
+
+appId: "1:950828844867:web:9e970d4afec42c3e3911f6"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+// ================= AUTH =================
+
+window.signup = async function(){
+
+const email =
+document.getElementById("email").value;
+
+const password =
+document.getElementById("password").value;
+
+await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+};
+
+window.login = async function(){
+
+const email =
+document.getElementById("email").value;
+
+const password =
+document.getElementById("password").value;
+
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+};
+
+window.googleLogin = async function(){
+
+const provider =
+new GoogleAuthProvider();
+
+await signInWithPopup(auth,provider);
+
+};
+
+window.logout = async function(){
+
+await signOut(auth);
+
+};
+
+// ================= STATE =================
+
+onAuthStateChanged(auth,(user)=>{
+
+if(user){
+
+document.getElementById("authBox")
+.classList.add("hidden");
+
+document.getElementById("app")
+.classList.remove("hidden");
+
+document.getElementById("logoutBtn")
+.classList.remove("hidden");
+
+document.getElementById("floatingBtn")
+.classList.remove("hidden");
+
+loadPosts();
+
+}else{
+
+document.getElementById("authBox")
+.classList.remove("hidden");
+
+document.getElementById("app")
+.classList.add("hidden");
+
+document.getElementById("logoutBtn")
+.classList.add("hidden");
+
+document.getElementById("floatingBtn")
+.classList.add("hidden");
+
+}
+
+});
+
+// ================= MODAL =================
+
+window.openModal = function(){
+
+document.getElementById("modal")
+.classList.remove("hidden");
+
+};
+
+window.closeModal = function(){
+
+document.getElementById("modal")
+.classList.add("hidden");
+
+};
 
 // ================= PREVIEW =================
 
@@ -619,12 +1042,12 @@ document.getElementById("previewContainer");
 
 container.classList.remove("hidden");
 
-const fileURL =
+const url =
 URL.createObjectURL(file);
 
 if(file.type.startsWith("image")){
 
-image.src = fileURL;
+image.src = url;
 
 image.classList.remove("hidden");
 
@@ -632,7 +1055,7 @@ video.classList.add("hidden");
 
 }else{
 
-video.src = fileURL;
+video.src = url;
 
 video.classList.remove("hidden");
 
@@ -642,18 +1065,215 @@ image.classList.add("hidden");
 
 };
 
-
 // ================= TEXT =================
 
 window.updateOverlayText = function(){
 
-const text =
-document.getElementById("overlayText").value;
-
 document.getElementById(
 "liveOverlayText"
-).innerText = text;
+).innerText =
+
+document.getElementById(
+"overlayText"
+).value;
+
+};
+
+// ================= UPLOAD =================
+
+window.uploadPost = async function(){
+
+const file =
+document.getElementById("file").files[0];
+
+if(!file){
+
+alert("Select file");
+
+return;
+
+}
+
+const caption =
+document.getElementById("caption").value;
+
+const overlayText =
+document.getElementById("overlayText").value;
+
+const songName =
+document.getElementById("songName").value;
+
+try{
+
+document.getElementById("uploadMsg")
+.innerText = "Uploading...";
+
+const formData = new FormData();
+
+formData.append("file",file);
+
+formData.append(
+"upload_preset",
+"flashgram"
+);
+
+const response = await fetch(
+
+"https://api.cloudinary.com/v1_1/dsqwcovob/auto/upload",
+
+{
+method:"POST",
+body:formData
+}
+
+);
+
+const data =
+await response.json();
+
+const mediaURL =
+data.secure_url;
+
+await addDoc(
+collection(db,"posts"),
+{
+
+caption,
+
+overlayText,
+
+songName,
+
+media: mediaURL,
+
+type:
+file.type.startsWith("video")
+? "video"
+: "image",
+
+user:
+auth.currentUser.email,
+
+likes:0,
+
+createdAt:
+serverTimestamp()
+
+}
+);
+
+document.getElementById("uploadMsg")
+.innerText =
+"Posted 🚀";
+
+closeModal();
+
+}catch(error){
+
+document.getElementById("uploadMsg")
+.innerText =
+error.message;
+
+}
+
+};
+
+// ================= POSTS =================
+
+function loadPosts(){
+
+const q = query(
+collection(db,"posts"),
+orderBy("createdAt","desc")
+);
+
+onSnapshot(q,(snapshot)=>{
+
+const postsDiv =
+document.getElementById("posts");
+
+postsDiv.innerHTML = "";
+
+snapshot.forEach((docSnap)=>{
+
+const post = docSnap.data();
+
+const postId = docSnap.id;
+
+const div =
+document.createElement("div");
+
+div.className = "post";
+
+div.innerHTML = `
+
+<div class="post-top">
+
+<div>
+${post.user}
+</div>
+
+<div class="song-tag">
+🎵 ${post.songName || "Original"}
+</div>
+
+</div>
+
+<div class="media-wrap">
+
+${
+post.type === "image"
+
+? `<img src="${post.media}"
+class="feed-media">`
+
+: `<video controls
+src="${post.media}"
+class="feed-media"></video>`
+}
+
+<div class="feed-text">
+${post.overlayText || ""}
+</div>
+
+</div>
+
+<p class="feed-caption">
+${post.caption || ""}
+</p>
+
+<button
+class="like-btn"
+onclick="likePost('${postId}')">
+
+❤️ ${post.likes || 0}
+
+</button>
+
+`;
+
+postsDiv.appendChild(div);
+
+});
+
+});
+
+}
+
+// ================= LIKE =================
+
+window.likePost = async function(postId){
+
+const postRef =
+doc(db,"posts",postId);
+
+await updateDoc(postRef,{
+likes: increment(1)
+});
 
 };
 
 </script>
+
+</body>
+</html>
