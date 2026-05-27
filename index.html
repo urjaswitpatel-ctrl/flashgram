@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Flashgram</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#111827;
+color:white;
+}
+
+header{
+background:#1f2937;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+color:#ff4d6d;
+}
+
+.container{
+max-width:500px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:#1f2937;
+padding:20px;
+border-radius:10px;
+margin-bottom:20px;
+}
+
+input,textarea{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:8px;
+background:#374151;
+color:white;
+}
+
+button{
+padding:12px;
+width:100%;
+margin-top:10px;
+border:none;
+border-radius:8px;
+background:#ff4d6d;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+.post{
+background:#1f2937;
+padding:15px;
+border-radius:10px;
+margin-top:20px;
+}
+
+.post img{
+width:100%;
+border-radius:10px;
+margin-top:10px;
+}
+
+.post video{
+width:100%;
+border-radius:10px;
+margin-top:10px;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.username{
+font-weight:bold;
+}
+
+.logout{
+width:auto;
+padding:10px 15px;
+}
+
+.hidden{
+display:none;
+}
+
+.like-btn{
+background:#374151;
+margin-top:10px;
+}
+
+.comment{
+background:#374151;
+padding:8px;
+border-radius:6px;
+margin-top:5px;
+}
+
+.small{
+font-size:14px;
+color:#cbd5e1;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">⚡ Flashgram</div>
+
+<button class="logout hidden" id="logoutBtn" onclick="logout()">
+Logout
+</button>
+</header>
+
+<div class="container">
+
+<!-- AUTH -->
+
+<div class="card" id="authBox">
+
+<h2>Login / Signup</h2>
+
+<input type="text" id="name" placeholder="Name">
+
+<input type="email" id="email" placeholder="Email">
+
+<input type="password" id="password" placeholder="Password">
+
+<button onclick="signup()">Signup</button>
+
+<button onclick="login()">Login</button>
+
+<button onclick="googleLogin()">Google Login</button>
+
+<p id="authMsg"></p>
+
+</div>
+
+<!-- APP -->
+
+<div id="app" class="hidden">
+
+<div class="card">
+
+<h2>Create Post</h2>
+
+<input type="file" id="file">
+
+<textarea id="caption" placeholder="Write caption"></textarea>
+
+<button onclick="uploadPost()">Upload</button>
+
+<p id="uploadMsg"></p>
+
+</div>
+
+<div id="posts"></div>
+
+</div>
+
+</div>
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+GoogleAuthProvider,
+signInWithPopup,
+onAuthStateChanged,
+signOut
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+serverTimestamp,
+query,
+orderBy,
+onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+import {
+getStorage,
+ref,
+uploadBytes,
+getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+
+
+// YOUR FIREBASE CONFIG
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDxyRpIkd1F8XLmfQ7tKwZMZdh1cHHmZYc",
+  authDomain: "flashgram-c87f7.firebaseapp.com",
+  projectId: "flashgram-c87f7",
+  storageBucket: "flashgram-c87f7.firebasestorage.app",
+  messagingSenderId: "950828844867",
+  appId: "1:950828844867:web:9e970d4afec42c3e3911f6"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+const storage = getStorage(app);
+
+
+// SIGNUP
+
+window.signup = async function(){
+
+const name = document.getElementById("name").value;
+
+const email = document.getElementById("email").value;
+
+const password = document.getElementById("password").value;
+
+try{
+
+const userCredential =
+await createUserWithEmailAndPassword(auth,email,password);
+
+document.getElementById("authMsg").innerText =
+"Signup successful";
+
+}catch(err){
+
+document.getElementById("authMsg").innerText =
+err.message;
+
+}
+
+}
+
+
+// LOGIN
+
+window.login = async function(){
+
+const email = document.getElementById("email").value;
+
+const password = document.getElementById("password").value;
+
+try{
+
+await signInWithEmailAndPassword(auth,email,password);
+
+document.getElementById("authMsg").innerText =
+"Login successful";
+
+}catch(err){
+
+document.getElementById("authMsg").innerText =
+err.message;
+
+}
+
+}
+
+
+// GOOGLE LOGIN
+
+window.googleLogin = async function(){
+
+try{
+
+const provider = new GoogleAuthProvider();
+
+await signInWithPopup(auth,provider);
+
+}catch(err){
+
+document.getElementById("authMsg").innerText =
+err.message;
+
+}
+
+}
+
+
+// LOGOUT
+
+window.logout = async function(){
+
+await signOut(auth);
+
+}
+
+
+// AUTH STATE
+
+onAuthStateChanged(auth,(user)=>{
+
+if(user){
+
+document.getElementById("authBox").classList.add("hidden");
+
+document.getElementById("app").classList.remove("hidden");
+
+document.getElementById("logoutBtn").classList.remove("hidden");
+
+loadPosts();
+
+}else{
+
+document.getElementById("authBox").classList.remove("hidden");
+
+document.getElementById("app").classList.add("hidden");
+
+document.getElementById("logoutBtn").classList.add("hidden");
+
+}
+
+});
+
+
+// UPLOAD POST
+
+window.uploadPost = async function(){
+
+const file =
+document.getElementById("file").files[0];
+
+const caption =
+document.getElementById("caption").value;
+
+if(!file){
+
+alert("Select file");
+
+return;
+
+}
+
+try{
+
+const storageRef =
+ref(storage,"posts/"+Date.now()+file.name);
+
+await uploadBytes(storageRef,file);
+
+const url =
+await getDownloadURL(storageRef);
+
+await addDoc(collection(db,"posts"),{
+
+caption:caption,
+
+media:url,
+
+type:file.type.startsWith("video")
+? "video"
+: "image",
+
+user:auth.currentUser.email,
+
+likes:0,
+
+createdAt:serverTimestamp()
+
+});
+
+document.getElementById("uploadMsg").innerText =
+"Uploaded";
+
+document.getElementById("caption").value="";
+
+document.getElementById("file").value="";
+
+}catch(err){
+
+document.getElementById("uploadMsg").innerText =
+err.message;
+
+}
+
+}
+
+
+// LOAD POSTS
+
+function loadPosts(){
+
+const q =
+query(collection(db,"posts"),orderBy("createdAt","desc"));
+
+onSnapshot(q,(snapshot)=>{
+
+const postsDiv =
+document.getElementById("posts");
+
+postsDiv.innerHTML="";
+
+snapshot.forEach((doc)=>{
+
+const post = doc.data();
+
+const div = document.createElement("div");
+
+div.className="post";
+
+div.innerHTML = `
+
+<div class="top">
+
+<div class="username">${post.user}</div>
+
+</div>
+
+<p style="margin-top:10px">
+${post.caption}
+</p>
+
+${
+post.type==="image"
+? `<img src="${post.media}">`
+: `<video controls src="${post.media}"></video>`
+}
+
+<button class="like-btn">
+❤️ ${post.likes}
+</button>
+
+`;
+
+postsDiv.appendChild(div);
+
+});
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
