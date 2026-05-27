@@ -1,547 +1,659 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!-- ================= NEW AGE SOCIAL POST DESIGN ================= -->
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="neo-post-box">
 
-<title>Flashgram</title>
+<!-- TOP USER -->
+
+<div class="neo-top">
+
+<div class="neo-profile-ring">
+
+<div class="neo-avatar">
+U
+</div>
+
+</div>
+
+<div>
+
+<div class="neo-name">
+Your Space
+</div>
+
+<div class="neo-status">
+online now
+</div>
+
+</div>
+
+</div>
+
+<!-- PREVIEW -->
+
+<div
+class="neo-preview hidden"
+id="previewContainer">
+
+<img
+id="previewImage"
+class="neo-media hidden"
+>
+
+<video
+id="previewVideo"
+class="neo-media hidden"
+controls>
+</video>
+
+<!-- GLASS OVERLAY -->
+
+<div class="neo-glass">
+
+<input
+type="text"
+id="overlayText"
+placeholder="Type aesthetic text..."
+oninput="updateOverlayText()"
+>
+
+<div
+class="neo-live-text"
+id="liveOverlayText">
+</div>
+
+</div>
+
+</div>
+
+<!-- TOOLBAR -->
+
+<div class="neo-toolbar">
+
+<!-- PLUS -->
+
+<label class="neo-plus">
+
+<input
+type="file"
+id="file"
+hidden
+accept="image/*,video/*"
+onchange="previewMedia(event)"
+>
+
++
+
+</label>
+
+<!-- SONG -->
+
+<div class="neo-music">
+
+🎵
+
+<input
+type="text"
+id="songName"
+placeholder="Add vibe soundtrack"
+>
+
+</div>
+
+</div>
+
+<!-- CAPTION -->
+
+<textarea
+id="caption"
+class="neo-caption"
+placeholder="Share your vibe...">
+</textarea>
+
+<!-- BUTTON -->
+
+<button
+class="neo-share"
+onclick="uploadPost()">
+
+Share Memory ✨
+
+</button>
+
+<p id="uploadMsg"></p>
+
+</div>
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
+/* ================= BODY FEEL ================= */
 
 body{
-background:#0f172a;
-color:white;
+
+background:
+radial-gradient(circle at top left,
+#1e1b4b,
+#020617 60%);
+
 }
 
-header{
-background:#1e293b;
-padding:15px 20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-position:sticky;
-top:0;
-}
+/* ================= MAIN CARD ================= */
 
-.logo{
-font-size:24px;
-font-weight:bold;
-color:#ff4d6d;
-}
+.neo-post-box{
 
-.container{
-max-width:600px;
+max-width:550px;
+
 margin:auto;
+
 padding:20px;
+
+border-radius:30px;
+
+background:rgba(255,255,255,0.05);
+
+backdrop-filter:blur(25px);
+
+border:1px solid rgba(255,255,255,0.08);
+
+box-shadow:
+0 10px 40px rgba(0,0,0,0.5);
+
+animation:floatIn 0.6s ease;
+
+overflow:hidden;
+
+position:relative;
+
 }
 
-.card{
-background:#1e293b;
-padding:20px;
-border-radius:12px;
-margin-bottom:20px;
+/* ================= GLOW ================= */
+
+.neo-post-box::before{
+
+content:"";
+
+position:absolute;
+
+width:250px;
+
+height:250px;
+
+background:#ff00aa;
+
+filter:blur(120px);
+
+opacity:0.2;
+
+top:-100px;
+
+right:-100px;
+
+border-radius:50%;
+
 }
 
-input,
-textarea{
+/* ================= TOP ================= */
+
+.neo-top{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+margin-bottom:18px;
+
+position:relative;
+
+z-index:2;
+
+}
+
+/* ================= PROFILE ================= */
+
+.neo-profile-ring{
+
+padding:3px;
+
+border-radius:50%;
+
+background:
+linear-gradient(
+45deg,
+#ff00aa,
+#7c3aed,
+#00e5ff
+);
+
+}
+
+.neo-avatar{
+
+width:55px;
+
+height:55px;
+
+border-radius:50%;
+
+background:#0f172a;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:22px;
+
+font-weight:bold;
+
+}
+
+.neo-name{
+
+font-size:17px;
+
+font-weight:700;
+
+}
+
+.neo-status{
+
+font-size:12px;
+
+color:#00ff99;
+
+}
+
+/* ================= PREVIEW ================= */
+
+.neo-preview{
+
+position:relative;
+
+overflow:hidden;
+
+border-radius:24px;
+
+margin-bottom:18px;
+
+animation:zoomIn 0.4s ease;
+
+}
+
+.neo-media{
+
 width:100%;
+
+max-height:600px;
+
+object-fit:cover;
+
+display:block;
+
+}
+
+/* ================= GLASS ================= */
+
+.neo-glass{
+
+position:absolute;
+
+bottom:20px;
+
+left:20px;
+
+right:20px;
+
+padding:16px;
+
+border-radius:20px;
+
+background:rgba(255,255,255,0.08);
+
+backdrop-filter:blur(15px);
+
+border:1px solid rgba(255,255,255,0.1);
+
+}
+
+.neo-glass input{
+
+width:100%;
+
 padding:12px;
-margin-top:10px;
+
 border:none;
-border-radius:8px;
-background:#334155;
+
+border-radius:14px;
+
+background:rgba(0,0,0,0.3);
+
 color:white;
+
 font-size:15px;
+
+outline:none;
+
 }
 
-textarea{
-min-height:100px;
-resize:vertical;
+/* ================= LIVE TEXT ================= */
+
+.neo-live-text{
+
+margin-top:12px;
+
+font-size:34px;
+
+font-weight:800;
+
+line-height:1.1;
+
+background:
+linear-gradient(
+45deg,
+#fff,
+#ff00aa,
+#00e5ff
+);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+text-shadow:0 0 25px rgba(255,255,255,0.2);
+
+word-break:break-word;
+
 }
 
-button{
-width:100%;
-padding:12px;
-margin-top:10px;
-border:none;
-border-radius:8px;
-background:#ff4d6d;
-color:white;
-font-size:16px;
+/* ================= TOOLBAR ================= */
+
+.neo-toolbar{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+margin-bottom:18px;
+
+}
+
+/* ================= PLUS ================= */
+
+.neo-plus{
+
+width:65px;
+
+height:65px;
+
+border-radius:24px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:40px;
+
+font-weight:bold;
+
 cursor:pointer;
+
+background:
+linear-gradient(
+135deg,
+#ff00aa,
+#7c3aed
+);
+
+transition:0.4s;
+
+box-shadow:
+0 10px 25px rgba(124,58,237,0.5);
+
 }
 
-button:hover{
-opacity:0.9;
+.neo-plus:hover{
+
+transform:
+rotate(180deg)
+scale(1.1);
+
 }
 
-.logout{
-width:auto;
-padding:10px 16px;
+/* ================= MUSIC ================= */
+
+.neo-music{
+
+flex:1;
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+padding:0 15px;
+
+height:65px;
+
+border-radius:20px;
+
+background:rgba(255,255,255,0.05);
+
+border:1px solid rgba(255,255,255,0.08);
+
+backdrop-filter:blur(10px);
+
+}
+
+.neo-music input{
+
+background:none;
+
+border:none;
+
+outline:none;
+
+color:white;
+
+width:100%;
+
+font-size:15px;
+
+}
+
+/* ================= CAPTION ================= */
+
+.neo-caption{
+
+width:100%;
+
+min-height:120px;
+
+padding:18px;
+
+border-radius:22px;
+
+background:rgba(255,255,255,0.05);
+
+border:1px solid rgba(255,255,255,0.08);
+
+color:white;
+
+font-size:15px;
+
+resize:none;
+
+outline:none;
+
+margin-bottom:18px;
+
+backdrop-filter:blur(10px);
+
+}
+
+/* ================= BUTTON ================= */
+
+.neo-share{
+
+width:100%;
+
+padding:16px;
+
+border:none;
+
+border-radius:22px;
+
+font-size:17px;
+
+font-weight:700;
+
+cursor:pointer;
+
+background:
+linear-gradient(
+45deg,
+#ff00aa,
+#7c3aed,
+#00e5ff
+);
+
+background-size:300% 300%;
+
+animation:gradientMove 6s ease infinite;
+
+color:white;
+
+transition:0.4s;
+
+box-shadow:
+0 15px 35px rgba(124,58,237,0.4);
+
+}
+
+.neo-share:hover{
+
+transform:translateY(-3px);
+
+}
+
+/* ================= ANIMATIONS ================= */
+
+@keyframes gradientMove{
+
+0%{
+background-position:0% 50%;
+}
+
+50%{
+background-position:100% 50%;
+}
+
+100%{
+background-position:0% 50%;
+}
+
+}
+
+@keyframes floatIn{
+
+from{
+opacity:0;
+transform:
+translateY(40px)
+scale(0.95);
+}
+
+to{
+opacity:1;
+transform:
+translateY(0)
+scale(1);
+}
+
+}
+
+@keyframes zoomIn{
+
+from{
+opacity:0;
+transform:scale(0.9);
+}
+
+to{
+opacity:1;
+transform:scale(1);
+}
+
 }
 
 .hidden{
 display:none;
 }
 
-.post{
-background:#1e293b;
-padding:15px;
-border-radius:12px;
-margin-bottom:20px;
-}
-
-.post img,
-.post video{
-width:100%;
-margin-top:10px;
-border-radius:10px;
-}
-
-.username{
-font-weight:bold;
-margin-bottom:10px;
-}
-
-.like-btn{
-background:#334155;
-margin-top:10px;
-}
-
-#uploadMsg,
-#authMsg{
-margin-top:10px;
-font-size:14px;
-color:#cbd5e1;
-}
-
 </style>
 
-</head>
+<script>
 
-<body>
+// ================= PREVIEW =================
 
-<header>
+window.previewMedia = function(event){
 
-<div class="logo">⚡ Flashgram</div>
+const file = event.target.files[0];
 
-<button class="logout hidden" id="logoutBtn" onclick="logout()">
-Logout
-</button>
+if(!file) return;
 
-</header>
+const image =
+document.getElementById("previewImage");
 
-<div class="container">
+const video =
+document.getElementById("previewVideo");
 
-<!-- LOGIN -->
+const container =
+document.getElementById("previewContainer");
 
-<div class="card" id="authBox">
+container.classList.remove("hidden");
 
-<h2>Login / Signup</h2>
+const fileURL =
+URL.createObjectURL(file);
 
-<input type="email" id="email" placeholder="Email">
+if(file.type.startsWith("image")){
 
-<input type="password" id="password" placeholder="Password">
+image.src = fileURL;
 
-<button onclick="signup()">Signup</button>
+image.classList.remove("hidden");
 
-<button onclick="login()">Login</button>
-
-<button onclick="googleLogin()">Google Login</button>
-
-<p id="authMsg"></p>
-
-</div>
-
-<!-- APP -->
-
-<div id="app" class="hidden">
-
-<div class="card">
-
-<h2>Create Post</h2>
-
-<input type="file" id="file">
-
-<textarea id="caption" placeholder="Write caption"></textarea>
-
-<button onclick="uploadPost()">Upload</button>
-
-<p id="uploadMsg"></p>
-
-</div>
-
-<div id="posts"></div>
-
-</div>
-
-</div>
-
-<script type="module">
-
-// ================= IMPORTS =================
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-
-import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-GoogleAuthProvider,
-signInWithPopup,
-onAuthStateChanged,
-signOut
-}
-from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-import {
-getFirestore,
-collection,
-addDoc,
-query,
-orderBy,
-onSnapshot,
-serverTimestamp,
-doc,
-updateDoc,
-increment
-}
-from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-
-// ================= FIREBASE CONFIG =================
-
-const firebaseConfig = {
-
-apiKey: "AIzaSyDxyRpIkd1F8XLmfQ7tKwZMZdh1cHHmZYc",
-
-authDomain: "flashgram-c87f7.firebaseapp.com",
-
-projectId: "flashgram-c87f7",
-
-storageBucket: "flashgram-c87f7.appspot.com",
-
-messagingSenderId: "950828844867",
-
-appId: "1:950828844867:web:9e970d4afec42c3e3911f6"
-
-};
-
-
-// ================= INITIALIZE =================
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-const db = getFirestore(app);
-
-
-// ================= SIGNUP =================
-
-window.signup = async function(){
-
-const email =
-document.getElementById("email").value;
-
-const password =
-document.getElementById("password").value;
-
-try{
-
-await createUserWithEmailAndPassword(
-auth,
-email,
-password
-);
-
-document.getElementById("authMsg").innerText =
-"Signup successful";
-
-}catch(err){
-
-document.getElementById("authMsg").innerText =
-err.message;
-
-}
-
-};
-
-
-// ================= LOGIN =================
-
-window.login = async function(){
-
-const email =
-document.getElementById("email").value;
-
-const password =
-document.getElementById("password").value;
-
-try{
-
-await signInWithEmailAndPassword(
-auth,
-email,
-password
-);
-
-document.getElementById("authMsg").innerText =
-"Login successful";
-
-}catch(err){
-
-document.getElementById("authMsg").innerText =
-err.message;
-
-}
-
-};
-
-
-// ================= GOOGLE LOGIN =================
-
-window.googleLogin = async function(){
-
-try{
-
-const provider =
-new GoogleAuthProvider();
-
-await signInWithPopup(auth,provider);
-
-}catch(err){
-
-document.getElementById("authMsg").innerText =
-err.message;
-
-}
-
-};
-
-
-// ================= LOGOUT =================
-
-window.logout = async function(){
-
-await signOut(auth);
-
-};
-
-
-// ================= AUTH =================
-
-onAuthStateChanged(auth,(user)=>{
-
-if(user){
-
-document.getElementById("authBox")
-.classList.add("hidden");
-
-document.getElementById("app")
-.classList.remove("hidden");
-
-document.getElementById("logoutBtn")
-.classList.remove("hidden");
-
-loadPosts();
+video.classList.add("hidden");
 
 }else{
 
-document.getElementById("authBox")
-.classList.remove("hidden");
+video.src = fileURL;
 
-document.getElementById("app")
-.classList.add("hidden");
+video.classList.remove("hidden");
 
-document.getElementById("logoutBtn")
-.classList.add("hidden");
-
-}
-
-});
-
-
-// ================= UPLOAD POST =================
-
-window.uploadPost = async function(){
-
-const file =
-document.getElementById("file").files[0];
-
-const caption =
-document.getElementById("caption").value;
-
-if(!file){
-
-alert("Please select file");
-
-return;
-
-}
-
-try{
-
-document.getElementById("uploadMsg").innerText =
-"Uploading...";
-
-const formData = new FormData();
-
-formData.append("file", file);
-
-formData.append(
-"upload_preset",
-"flashgram"
-);
-
-const cloudinaryResponse = await fetch(
-
-"https://api.cloudinary.com/v1_1/dsqwcovob/auto/upload",
-
-{
-method:"POST",
-body:formData
-}
-
-);
-
-const cloudinaryData =
-await cloudinaryResponse.json();
-
-if(cloudinaryData.error){
-
-document.getElementById("uploadMsg").innerText =
-cloudinaryData.error.message;
-
-return;
-
-}
-
-const mediaURL =
-cloudinaryData.secure_url;
-
-await addDoc(collection(db,"posts"),{
-
-caption: caption,
-
-media: mediaURL,
-
-type: file.type.startsWith("video")
-? "video"
-: "image",
-
-user: auth.currentUser.email,
-
-likes: 0,
-
-createdAt: serverTimestamp()
-
-});
-
-document.getElementById("uploadMsg").innerText =
-"Post uploaded successfully";
-
-document.getElementById("caption").value = "";
-
-document.getElementById("file").value = "";
-
-}catch(error){
-
-console.log(error);
-
-document.getElementById("uploadMsg").innerText =
-error.message;
+image.classList.add("hidden");
 
 }
 
 };
 
 
-// ================= LOAD POSTS =================
+// ================= TEXT =================
 
-function loadPosts(){
+window.updateOverlayText = function(){
 
-const q = query(
-collection(db,"posts"),
-orderBy("createdAt","desc")
-);
+const text =
+document.getElementById("overlayText").value;
 
-onSnapshot(q,(snapshot)=>{
-
-const postsDiv =
-document.getElementById("posts");
-
-postsDiv.innerHTML = "";
-
-snapshot.forEach((docSnap)=>{
-
-const post = docSnap.data();
-
-const postId = docSnap.id;
-
-const div = document.createElement("div");
-
-div.className = "post";
-
-div.innerHTML = `
-
-<div class="username">
-${post.user}
-</div>
-
-<p>
-${post.caption || ""}
-</p>
-
-${
-post.type === "image"
-
-? `<img src="${post.media}">`
-
-: `<video controls src="${post.media}"></video>`
-}
-
-<button class="like-btn"
-onclick="likePost('${postId}')">
-
-❤️ ${post.likes || 0}
-
-</button>
-
-`;
-
-postsDiv.appendChild(div);
-
-});
-
-});
-
-}
-
-
-// ================= LIKE =================
-
-window.likePost = async function(postId){
-
-const postRef =
-doc(db,"posts",postId);
-
-await updateDoc(postRef,{
-likes: increment(1)
-});
+document.getElementById(
+"liveOverlayText"
+).innerText = text;
 
 };
 
 </script>
-
-</body>
-</html>
