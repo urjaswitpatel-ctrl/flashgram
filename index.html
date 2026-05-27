@@ -4,13 +4,16 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>FutureGram</title>
 
 <style>
 
-/* ================= GLOBAL ================= */
+/* ================= RESET ================= */
 
 *{
 margin:0;
@@ -31,9 +34,9 @@ linear-gradient(
 
 color:white;
 
-min-height:100vh;
-
 overflow-x:hidden;
+
+min-height:100vh;
 
 }
 
@@ -55,10 +58,10 @@ align-items:center;
 
 padding:18px 25px;
 
-background:
-rgba(15,23,42,0.75);
-
 backdrop-filter:blur(20px);
+
+background:
+rgba(15,23,42,0.7);
 
 border-bottom:
 1px solid rgba(255,255,255,0.08);
@@ -114,336 +117,153 @@ padding:20px;
 
 }
 
-/* ================= AUTH ================= */
+/* ================= GOOGLE LOGIN ================= */
 
-.auth-card{
-
-padding:30px;
-
-border-radius:30px;
-
-background:
-rgba(255,255,255,0.05);
-
-backdrop-filter:blur(20px);
-
-border:
-1px solid rgba(255,255,255,0.08);
-
-}
-
-.auth-title{
-
-font-size:32px;
-
-margin-bottom:25px;
-
-font-weight:900;
-
-}
-
-.auth-input{
-
-width:100%;
-
-padding:16px;
-
-margin-bottom:15px;
-
-border:none;
-
-border-radius:18px;
-
-background:
-rgba(255,255,255,0.06);
-
-color:white;
-
-outline:none;
-
-font-size:15px;
-
-}
-
-.auth-btn{
-
-width:100%;
-
-padding:15px;
-
-margin-top:10px;
-
-border:none;
-
-border-radius:18px;
-
-font-size:16px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-color:white;
-
-background:
-linear-gradient(
-45deg,
-#ff0080,
-#7c3aed,
-#00d4ff
-);
-
-}
-
-/* ================= FLOAT BUTTON ================= */
-
-.floating-btn{
-
-position:fixed;
-
-bottom:25px;
-
-right:25px;
-
-width:75px;
-
-height:75px;
-
-border:none;
-
-border-radius:28px;
-
-font-size:42px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-z-index:1000;
-
-color:white;
-
-background:
-linear-gradient(
-45deg,
-#ff0080,
-#7c3aed,
-#00d4ff
-);
-
-box-shadow:
-0 15px 40px rgba(124,58,237,0.5);
-
-}
-
-/* ================= MODAL ================= */
-
-.modal{
+.auth-screen{
 
 position:fixed;
 
 inset:0;
 
-background:
-rgba(0,0,0,0.7);
-
 display:flex;
 
 justify-content:center;
 
 align-items:center;
-
-padding:20px;
-
-backdrop-filter:blur(10px);
-
-z-index:2000;
-
-}
-
-.modal-box{
-
-width:100%;
-
-max-width:550px;
-
-padding:25px;
-
-border-radius:35px;
-
-background:
-rgba(15,23,42,0.9);
-
-border:
-1px solid rgba(255,255,255,0.08);
-
-}
-
-.modal-top{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-margin-bottom:20px;
-
-}
-
-.close-btn{
-
-background:none;
-
-border:none;
-
-color:white;
-
-font-size:24px;
-
-cursor:pointer;
-
-}
-
-/* ================= PREVIEW ================= */
-
-.preview{
-
-position:relative;
 
 overflow:hidden;
 
-border-radius:24px;
-
-margin-bottom:18px;
-
-}
-
-.preview img,
-.preview video{
-
-width:100%;
-
-max-height:500px;
-
-object-fit:cover;
-
-border-radius:24px;
-
-display:block;
+background:
+linear-gradient(
+135deg,
+#020617,
+#0f172a,
+#111827
+);
 
 }
 
-.overlay-text{
+.auth-glow{
 
 position:absolute;
 
-bottom:20px;
+width:500px;
 
-left:20px;
+height:500px;
 
-font-size:34px;
-
-font-weight:900;
-
-text-shadow:0 0 20px black;
-
-max-width:80%;
-
-word-break:break-word;
-
-}
-
-/* ================= FORM ================= */
-
-.tool-row{
-
-display:flex;
-
-gap:12px;
-
-margin-bottom:15px;
-
-}
-
-.upload-icon{
-
-width:65px;
-
-height:65px;
-
-border-radius:22px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:30px;
-
-cursor:pointer;
+border-radius:50%;
 
 background:
 linear-gradient(
 45deg,
 #ff0080,
-#7c3aed
+#7c3aed,
+#00d4ff
+);
+
+filter:blur(120px);
+
+opacity:0.25;
+
+animation:pulseGlow 6s ease infinite;
+
+}
+
+.google-login-card{
+
+position:relative;
+
+z-index:2;
+
+width:90%;
+
+max-width:420px;
+
+padding:40px;
+
+border-radius:40px;
+
+background:
+rgba(255,255,255,0.05);
+
+backdrop-filter:blur(25px);
+
+border:
+1px solid rgba(255,255,255,0.08);
+
+text-align:center;
+
+box-shadow:
+0 20px 50px rgba(0,0,0,0.4);
+
+}
+
+.login-logo{
+
+width:100px;
+
+height:100px;
+
+margin:auto;
+
+margin-bottom:25px;
+
+border-radius:32px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:52px;
+
+background:
+linear-gradient(
+45deg,
+#ff0080,
+#7c3aed,
+#00d4ff
 );
 
 }
 
-.modern-input{
+.login-title{
 
-width:100%;
+font-size:42px;
 
-padding:15px;
+font-weight:900;
 
-border:none;
-
-border-radius:20px;
+margin-bottom:10px;
 
 background:
-rgba(255,255,255,0.06);
+linear-gradient(
+45deg,
+#ffffff,
+#00d4ff
+);
 
-color:white;
+-webkit-background-clip:text;
 
-outline:none;
+-webkit-text-fill-color:transparent;
 
 }
 
-.caption{
+.login-subtitle{
+
+font-size:15px;
+
+color:#94a3b8;
+
+margin-bottom:35px;
+
+}
+
+.google-login-btn{
 
 width:100%;
-
-min-height:120px;
 
 padding:18px;
-
-border:none;
-
-border-radius:24px;
-
-background:
-rgba(255,255,255,0.06);
-
-color:white;
-
-outline:none;
-
-resize:none;
-
-margin-top:15px;
-
-margin-bottom:18px;
-
-}
-
-.share-btn{
-
-width:100%;
-
-padding:16px;
 
 border:none;
 
@@ -451,19 +271,39 @@ border-radius:22px;
 
 font-size:17px;
 
-font-weight:bold;
+font-weight:700;
 
 cursor:pointer;
 
-color:white;
+display:flex;
 
-background:
-linear-gradient(
-45deg,
-#ff0080,
-#7c3aed,
-#00d4ff
-);
+align-items:center;
+
+justify-content:center;
+
+gap:14px;
+
+background:white;
+
+color:black;
+
+transition:0.4s;
+
+}
+
+.google-login-btn:hover{
+
+transform:
+translateY(-3px)
+scale(1.02);
+
+}
+
+.google-icon{
+
+width:24px;
+
+height:24px;
 
 }
 
@@ -494,6 +334,8 @@ overflow:hidden;
 margin-bottom:12px;
 
 font-weight:bold;
+
+font-size:15px;
 
 }
 
@@ -530,6 +372,8 @@ font-weight:900;
 text-shadow:0 0 20px black;
 
 max-width:80%;
+
+word-break:break-word;
 
 }
 
@@ -656,8 +500,290 @@ color:#00d4ff;
 
 }
 
+/* ================= FLOAT BUTTON ================= */
+
+.floating-btn{
+
+position:fixed;
+
+bottom:25px;
+
+right:25px;
+
+width:75px;
+
+height:75px;
+
+border:none;
+
+border-radius:28px;
+
+font-size:42px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+z-index:1000;
+
+color:white;
+
+background:
+linear-gradient(
+45deg,
+#ff0080,
+#7c3aed,
+#00d4ff
+);
+
+box-shadow:
+0 15px 40px rgba(124,58,237,0.5);
+
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+
+position:fixed;
+
+inset:0;
+
+background:
+rgba(0,0,0,0.7);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+backdrop-filter:blur(10px);
+
+z-index:2000;
+
+}
+
+.modal-box{
+
+width:100%;
+
+max-width:550px;
+
+padding:25px;
+
+border-radius:35px;
+
+background:
+rgba(15,23,42,0.9);
+
+border:
+1px solid rgba(255,255,255,0.08);
+
+}
+
+.modal-top{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:20px;
+
+}
+
+.close-btn{
+
+background:none;
+
+border:none;
+
+color:white;
+
+font-size:24px;
+
+cursor:pointer;
+
+}
+
+.preview{
+
+position:relative;
+
+overflow:hidden;
+
+border-radius:24px;
+
+margin-bottom:18px;
+
+}
+
+.preview img,
+.preview video{
+
+width:100%;
+
+max-height:500px;
+
+object-fit:cover;
+
+border-radius:24px;
+
+display:block;
+
+}
+
+.overlay-text{
+
+position:absolute;
+
+bottom:20px;
+
+left:20px;
+
+font-size:34px;
+
+font-weight:900;
+
+text-shadow:0 0 20px black;
+
+}
+
+.tool-row{
+
+display:flex;
+
+gap:12px;
+
+margin-bottom:15px;
+
+}
+
+.upload-icon{
+
+width:65px;
+
+height:65px;
+
+border-radius:22px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:30px;
+
+cursor:pointer;
+
+background:
+linear-gradient(
+45deg,
+#ff0080,
+#7c3aed
+);
+
+}
+
+.modern-input{
+
+width:100%;
+
+padding:15px;
+
+border:none;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,0.06);
+
+color:white;
+
+outline:none;
+
+}
+
+.caption{
+
+width:100%;
+
+min-height:120px;
+
+padding:18px;
+
+border:none;
+
+border-radius:24px;
+
+background:
+rgba(255,255,255,0.06);
+
+color:white;
+
+outline:none;
+
+resize:none;
+
+margin-top:15px;
+
+margin-bottom:18px;
+
+}
+
+.share-btn{
+
+width:100%;
+
+padding:16px;
+
+border:none;
+
+border-radius:22px;
+
+font-size:17px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+color:white;
+
+background:
+linear-gradient(
+45deg,
+#ff0080,
+#7c3aed,
+#00d4ff
+);
+
+}
+
 .hidden{
 display:none;
+}
+
+/* ================= ANIMATION ================= */
+
+@keyframes pulseGlow{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.1);
+}
+
+100%{
+transform:scale(1);
+}
+
 }
 
 </style>
@@ -683,71 +809,55 @@ Logout
 
 </header>
 
-<div class="container">
-
-<!-- AUTH -->
+<!-- ================= LOGIN ================= -->
 
 <div
-class="auth-card"
+class="auth-screen"
 id="authBox">
 
-<h2 class="auth-title">
-Welcome Back ✨
-</h2>
+<div class="auth-glow"></div>
 
-<input
-type="email"
-id="email"
-class="auth-input"
-placeholder="Email">
+<div class="google-login-card">
 
-<input
-type="password"
-id="password"
-class="auth-input"
-placeholder="Password">
+<div class="login-logo">
+⚡
+</div>
 
-<button
-class="auth-btn"
-onclick="signup()">
+<h1 class="login-title">
+FutureGram
+</h1>
 
-Signup
-
-</button>
+<p class="login-subtitle">
+AI Age Social Platform
+</p>
 
 <button
-class="auth-btn"
-onclick="login()">
-
-Login
-
-</button>
-
-<button
-class="auth-btn"
+class="google-login-btn"
 onclick="googleLogin()">
 
-Google Login
+<img
+src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
+class="google-icon">
+
+Continue with Google
 
 </button>
-
-<p id="authMsg"></p>
 
 </div>
 
-<!-- APP -->
+</div>
+
+<!-- ================= APP ================= -->
 
 <div
-id="app"
-class="hidden">
+class="container hidden"
+id="app">
 
 <div id="posts"></div>
 
 </div>
 
-</div>
-
-<!-- FLOATING BUTTON -->
+<!-- ================= FLOAT BUTTON ================= -->
 
 <button
 class="floating-btn hidden"
@@ -758,7 +868,7 @@ onclick="openModal()">
 
 </button>
 
-<!-- MODAL -->
+<!-- ================= MODAL ================= -->
 
 <div
 class="modal hidden"
@@ -858,8 +968,6 @@ from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 
 import {
 getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
 GoogleAuthProvider,
 signInWithPopup,
 onAuthStateChanged,
@@ -906,48 +1014,26 @@ const auth = getAuth(app);
 
 const db = getFirestore(app);
 
-// ================= AUTH =================
-
-window.signup = async function(){
-
-const email =
-document.getElementById("email").value;
-
-const password =
-document.getElementById("password").value;
-
-await createUserWithEmailAndPassword(
-auth,
-email,
-password
-);
-
-};
-
-window.login = async function(){
-
-const email =
-document.getElementById("email").value;
-
-const password =
-document.getElementById("password").value;
-
-await signInWithEmailAndPassword(
-auth,
-email,
-password
-);
-
-};
+// ================= GOOGLE LOGIN =================
 
 window.googleLogin = async function(){
+
+try{
 
 const provider =
 new GoogleAuthProvider();
 
 await signInWithPopup(auth,provider);
 
+}catch(error){
+
+alert(error.message);
+
+}
+
 };
+
+// ================= LOGOUT =================
 
 window.logout = async function(){
 
@@ -1088,9 +1174,6 @@ document.getElementById("overlayText").value;
 
 try{
 
-document.getElementById("uploadMsg")
-.innerText = "Uploading...";
-
 const formData = new FormData();
 
 formData.append("file",file);
@@ -1151,9 +1234,7 @@ closeModal();
 
 }catch(error){
 
-document.getElementById("uploadMsg")
-.innerText =
-error.message;
+alert(error.message);
 
 }
 
