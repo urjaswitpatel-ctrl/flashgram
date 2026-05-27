@@ -213,13 +213,83 @@ orderBy,
 onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-import {
-getStorage,
-ref,
-uploadBytes,
-getDownloadURL
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
+window.uploadPost = async function(){
+
+const file =
+document.getElementById("file").files[0];
+
+const caption =
+document.getElementById("caption").value;
+
+if(!file){
+alert("Select file");
+return;
+}
+
+try{
+
+document.getElementById("uploadMsg").innerText =
+"Uploading...";
+
+const formData = new FormData();
+
+formData.append("file", file);
+
+formData.append(
+"upload_preset",
+"flashgram"
+);
+
+const response = await fetch(
+"https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/auto/upload",
+{
+method: "POST",
+body: formData
+}
+);
+
+const data = await response.json();
+
+const mediaURL = data.secure_url;
+
+await addDoc(collection(db,"posts"),{
+
+caption: caption,
+
+media: mediaURL,
+
+type: file.type.startsWith("video")
+? "video"
+: "image",
+
+user: auth.currentUser.email,
+
+userId: auth.currentUser.uid,
+
+likes: 0,
+
+createdAt: serverTimestamp()
+
+});
+
+document.getElementById("uploadMsg").innerText =
+"Post uploaded";
+
+document.getElementById("caption").value = "";
+
+document.getElementById("file").value = "";
+
+}catch(err){
+
+console.log(err);
+
+document.getElementById("uploadMsg").innerText =
+err.message;
+
+}
+
+}
 
 // YOUR FIREBASE CONFIG
 
@@ -239,7 +309,7 @@ const auth = getAuth(app);
 
 const db = getFirestore(app);
 
-const storage = getStorage(app);
+
 
 
 // SIGNUP
