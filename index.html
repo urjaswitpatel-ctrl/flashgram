@@ -441,13 +441,7 @@ return;
 
 try{
 
-const storageRef =
-ref(storage,"posts/"+Date.now()+file.name);
 
-await uploadBytes(storageRef,file);
-
-const url =
-await getDownloadURL(storageRef);
 
 await addDoc(collection(db,"posts"),{
 
