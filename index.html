@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Flashgram</title>
@@ -118,18 +116,6 @@ background:#334155;
 margin-top:10px;
 }
 
-.comment-box{
-margin-top:10px;
-}
-
-.comment{
-background:#334155;
-padding:8px;
-border-radius:6px;
-margin-top:5px;
-font-size:14px;
-}
-
 #uploadMsg,
 #authMsg{
 margin-top:10px;
@@ -155,7 +141,7 @@ Logout
 
 <div class="container">
 
-<!-- AUTH -->
+<!-- LOGIN -->
 
 <div class="card" id="authBox">
 
@@ -201,7 +187,7 @@ Logout
 
 <script type="module">
 
-// ================= FIREBASE IMPORTS =================
+// ================= IMPORTS =================
 
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -352,7 +338,7 @@ await signOut(auth);
 };
 
 
-// ================= AUTH STATE =================
+// ================= AUTH =================
 
 onAuthStateChanged(auth,(user)=>{
 
@@ -397,7 +383,7 @@ document.getElementById("caption").value;
 
 if(!file){
 
-alert("Select file");
+alert("Please select file");
 
 return;
 
@@ -410,14 +396,14 @@ document.getElementById("uploadMsg").innerText =
 
 const formData = new FormData();
 
-formData.append("file",file);
+formData.append("file", file);
 
 formData.append(
 "upload_preset",
 "flashgram"
 );
 
-const response = await fetch(
+const cloudinaryResponse = await fetch(
 
 "https://api.cloudinary.com/v1_1/dsqwcovob/auto/upload",
 
@@ -428,18 +414,20 @@ body:formData
 
 );
 
-const data = await response.json();
+const cloudinaryData =
+await cloudinaryResponse.json();
 
-if(data.error){
+if(cloudinaryData.error){
 
 document.getElementById("uploadMsg").innerText =
-data.error.message;
+cloudinaryData.error.message;
 
 return;
 
 }
 
-const mediaURL = data.secure_url;
+const mediaURL =
+cloudinaryData.secure_url;
 
 await addDoc(collection(db,"posts"),{
 
@@ -466,12 +454,12 @@ document.getElementById("caption").value = "";
 
 document.getElementById("file").value = "";
 
-}catch(err){
+}catch(error){
 
-console.log(err);
+console.log(error);
 
 document.getElementById("uploadMsg").innerText =
-err.message;
+error.message;
 
 }
 
@@ -523,7 +511,7 @@ post.type === "image"
 }
 
 <button class="like-btn"
-onclick="likePost('${postId}',${post.likes || 0})">
+onclick="likePost('${postId}')">
 
 ❤️ ${post.likes || 0}
 
@@ -540,11 +528,12 @@ postsDiv.appendChild(div);
 }
 
 
-// ================= LIKE POST =================
+// ================= LIKE =================
 
-window.likePost = async function(postId,currentLikes){
+window.likePost = async function(postId){
 
-const postRef = doc(db,"posts",postId);
+const postRef =
+doc(db,"posts",postId);
 
 await updateDoc(postRef,{
 likes: increment(1)
@@ -555,5 +544,4 @@ likes: increment(1)
 </script>
 
 </body>
-
 </html>
